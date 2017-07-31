@@ -15,13 +15,14 @@ use AppBundle\Entity\Pokemon;
 class PokemonController extends Controller
 {
     /**
+     * 200 si la requête s'est bien effectuée
+     * 
      * @ApiDoc(
      *  section="Pokemon",
      *  description="Get all pokemon",
      *  resource = true,
      *  statusCodes = {
-     *     200 = "Successful",
-     *     404 = "Page not found"
+     *     200 = "Successful"
      *   }
      * )
      * @FOSRest\Get("/pokemon")
@@ -30,11 +31,12 @@ class PokemonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $pokemons = $em->getRepository('AppBundle:Pokemon')->findAll();
-
         return $pokemons;
     }
 
     /**
+     * 200 si la requête s'est bien effectuée
+     * 404 si la ressource n'existe pas
      * @ApiDoc(
      *  section="Pokemon",
      *  description="Get a pokemon",
@@ -52,6 +54,8 @@ class PokemonController extends Controller
     }
 
     /**
+     * 201 si la ressource a bien été créée.
+     * 400 si les données envoyées ne sont pas complètes
      * @ApiDoc(
      *  section="Pokemon",
      *  description="Create a new pokemon",
