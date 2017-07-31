@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,17 +19,29 @@ class Pokemon
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $number;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=false)
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 20,
+     *      minMessage = "Le nom doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le nom ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
+     * @Assert\Length(
+     *      min = 15,
+     *      max = 255,
+     *      minMessage = "La description doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le description ne peut pas contenir plus de {{ limit }} caractères"
+     * )
      */
     private $description;
 

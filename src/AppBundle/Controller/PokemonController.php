@@ -80,7 +80,12 @@ class PokemonController extends Controller
         $pokemon->setNumber($paramFetcher->get('number'));
         $pokemon->setName(ucfirst($paramFetcher->get('name')));
         $pokemon->setDescription($paramFetcher->get('description'));
-
+        $validator = $this->get("validator");
+        $errors = $validator->validate($pokemon);
+        if(count($errors) > 0){
+            $resp = array("message" => $errors[0]->getMessage());
+            return new JsonResponse($resp, JsonResponse::HTTP_BAD_REQUEST);
+        } 
         $pokeManager->savePokemon($pokemon);
 
         return new JsonResponse(null, JsonResponse::HTTP_CREATED);
